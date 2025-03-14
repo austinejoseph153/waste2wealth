@@ -56,7 +56,12 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "w2w.w2wpages.apps.W2WpagesConfig",
+    "w2w.account.apps.AccountConfig",
+    "w2w.product.apps.ProductConfig",
+    "w2w.order.apps.OrderConfig"
+]
 LOCAL_APPS = []
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -135,10 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'es'
-LANGUAGES = (
-    ('es', _('ES')),
-)
+LANGUAGE_CODE = "en-us"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 TIME_ZONE = "UTC"
@@ -188,3 +190,4 @@ ADMINS = [("happy", "happy@gmail.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
+PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY')

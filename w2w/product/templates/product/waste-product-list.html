@@ -1,0 +1,63 @@
+{% extends "frontend/base.html" %}
+{% load static i18n %}
+
+{% block content %}
+    <!--Start breadcrumb area paroller-->
+    <section class="breadcrumb-area">
+        <div class="breadcrumb-area-bg" style="background-image: url('../../../static/frontend/images/breadcrumb/breadcrumb-1.jpg');">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="inner-content">
+                        <div class="breadcrumb-menu" data-aos="fade-down" data-aos-easing="linear"
+                            data-aos-duration="1500">
+                        </div>
+                        <div class="title" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+                            <h2>Products</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End breadcrumb area-->
+
+    <div class="products-list">
+        <div class="container">
+            {% if product_list|length > 0 %}
+                <div class="row">
+                    {% for product in product_list %}
+                        <div class="col-sm-6 col-md-4 col-xl-3">
+                            <div class="single-product">
+                                <div class="thumb">
+                                    <img src="{{ product.image.url }}" alt="">
+                                </div>
+                                <div class="price-tag">
+                                    <div class="line-through"></div>
+                                    <span class="price">N{{product.price}}</span>
+                                </div>
+                                <div class="details text-center">
+                                    <h6>{{product.name}}</h6>
+                                    <p class="m-0">{{product.category}}</p>
+                                </div>
+                                <div class="links">
+                                    <a href="{% url 'product:add_to_cart' product_id=product.id %}">add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-container border-shadow d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <h4 class="mb-3">No product found</h4>
+                        <p>No product found for the selected category</p>
+                        <a href="{% url 'pages:home' %}">Go home</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

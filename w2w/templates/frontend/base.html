@@ -1,0 +1,120 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block page_title %}{% endblock %}</title>
+    
+        <!-- responsive meta -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- For IE -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Google Fonts -->
+    
+        <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@300;400;500;600;700;800;900&amp;display=swap"
+            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'frontend/css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/aos.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/custom-animate.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/fancybox.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/icomoon.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/imp.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/jquery.bootstrap-touchspin.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/nice-select.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/owl.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/rtl.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/scrollbar.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/swiper.min.css' %}">
+    
+        <!-- Module css -->
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/header-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/banner-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/about-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/blog-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/fact-counter-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/faq-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/contact-page.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/breadcrumb-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/team-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/partner-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/testimonial-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/services-section.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/module-css/footer-section.css' %}">
+    
+        <link href="{% static 'frontend/css/color/theme-color.css' %}" id="jssDefault" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/responsive.css' %}">
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'frontend/images/favicon/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" href="{% static 'frontend/images/favicon/favicon-32x32.png' %}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{% static 'frontend/images/favicon/favicon-16x16.png' %}" sizes="16x16">
+        {% block extra_css %} {% endblock %}    
+    </head>
+<body>
+
+    <!-- Preloader -->
+    <div class="loader-wrap">
+        <div class="preloader">
+            <div class="preloader-close">Preloader Close</div>
+        </div>
+        <div class="layer layer-one"><span class="overlay"></span></div>
+        <div class="layer layer-two"><span class="overlay"></span></div>
+        <div class="layer layer-three"><span class="overlay"></span></div>
+    </div>
+    
+    <!-- header start -->
+    {% block navigation %}
+        {% include 'frontend/layouts/header.html' %}
+    {% endblock %}
+    <!-- header end -->
+    
+    <!-- content start -->
+    {% block content %}
+
+    {% endblock %}
+    <!-- content end -->
+
+    <!-- footer start -->
+        {% include 'frontend/layouts/footer.html' %}
+    <!-- footer end -->
+    <script src="{% static 'frontend/js/jquery.js' %}"></script>
+    <script src="{% static 'frontend/js/aos.js' %}"></script>
+    <script src="{% static 'frontend/js/appear.js' %}"></script>
+    <script src="{% static 'frontend/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'frontend/js/isotope.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.bootstrap-touchspin.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.countTo.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.event.move.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.fancybox.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery.paroller.min.js' %}"></script>
+    <script src="{% static 'frontend/js/jquery-sidebar-content.js' %}"></script>
+    <script src="{% static 'frontend/js/knob.js' %}"></script>
+    <script src="{% static 'frontend/js/map-script.js' %}"></script>
+    <script src="{% static 'frontend/js/owl.js' %}"></script>
+    <script src="{% static 'frontend/js/pagenav.js' %}"></script>
+    <script src="{% static 'frontend/js/scrollbar.js' %}"></script>
+    <script src="{% static 'frontend/js/swiper.min.js' %}"></script>
+    <script src="{% static 'frontend/js/tilt.jquery.js' %}"></script>
+    <script src="{% static 'frontend/js/TweenMax.min.js' %}"></script>
+    <script src="{% static 'frontend/js/validation.js' %}"></script>
+    <script src="{% static 'frontend/js/wow.js' %}"></script>
+
+    <script src="{% static 'frontend/js/jquery-1color-switcher.min.js' %}"></script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATY4Rxc8jNvDpsK8ZetC7JyN4PFVYGCGM&amp;callback=initMap">
+    </script>
+
+    <!-- thm custom script -->
+    <script src="{% static 'frontend/js/custom.js' %}"></script>
+    {% block extra_js %} {% endblock %}
+</body>
+</html>

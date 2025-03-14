@@ -1,0 +1,80 @@
+[
+      {
+            "name": "Rice Husk",
+            "category": "Biomass",
+            "product_url": "https://waste2wealth.africa/product/rice-husk/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Rice-Husk-300x300.jpg"
+      },
+      {
+            "name": "Sugarcane Residue",
+            "category": "Biomass",
+            "product_url": "https://waste2wealth.africa/product/sugarcane-residue/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture12-300x300.jpg"
+      },
+      {
+            "name": "Glass scraps",
+            "category": "Glass",
+            "product_url": "https://waste2wealth.africa/product/glass-scraps/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture-4-300x300.jpg"
+      },
+      {
+            "name": "Cardboard",
+            "category": "Wood & Paper",
+            "product_url": "https://waste2wealth.africa/product/cardboard/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture-6-300x300.jpg"
+      },
+      {
+            "name": "Newspaper",
+            "category": "Wood & Paper",
+            "product_url": "https://waste2wealth.africa/product/newspaper/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture12-5-300x300.jpg"
+      },
+      {
+            "name": "Shredded paper",
+            "category": "Wood & Paper",
+            "product_url": "https://waste2wealth.africa/product/shredded-paper/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture-8-300x300.jpg"
+      },
+      {
+            "name": "Mixed CPU\u2019s \u2013 Not working",
+            "category": "Electronics",
+            "product_url": "https://waste2wealth.africa/product/mixed-cpus-not-working/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture-2-300x300.jpg"
+      },
+      {
+            "name": "Motors",
+            "category": "Electronics",
+            "product_url": "https://waste2wealth.africa/product/motors/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture12-2-300x300.jpg"
+      },
+      {
+            "name": "Cheapest Steel in SA",
+            "category": "Metal",
+            "product_url": "https://waste2wealth.africa/product/cheapest-steel-in-sa/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/WhatsApp-Image-2022-04-01-at-10.56.50-AM-1-300x300.jpeg"
+      },
+      {
+            "name": "Bronze Scraps",
+            "category": "Metal",
+            "product_url": "https://waste2wealth.africa/product/bronze-scraps/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Capture-5-300x300.jpg"
+      },
+      {
+            "name": "Rubber",
+            "category": "Rubber/Latex",
+            "product_url": "https://waste2wealth.africa/product/rubber/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/Rubber-300x300.jpg"
+      },
+      {
+            "name": "Conola Seeds",
+            "category": "Seed Oils",
+            "product_url": "https://waste2wealth.africa/product/conola-seeds/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2022/04/WhatsApp-Image-2022-04-09-at-11.35.55-PM-300x300.jpeg"
+      },
+      {
+            "name": "Lucerne Animal Feeds",
+            "category": "Animal Feedstock",
+            "product_url": "https://waste2wealth.africa/product/lucerne-animal-feeds/",
+            "image_url": "https://waste2wealth.africa/wp-content/uploads/2024/08/WhatsApp-Image-2024-08-16-at-17.06.38_f5906b69.jpg"
+      }
+]

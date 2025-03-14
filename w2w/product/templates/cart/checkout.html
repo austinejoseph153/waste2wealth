@@ -1,0 +1,240 @@
+{% extends "frontend/base.html" %}
+{% load static i18n %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <!--Start breadcrumb area paroller-->
+    <section class="breadcrumb-area">
+        <div class="breadcrumb-area-bg" style="background-image: url('../../../static/frontend/images/breadcrumb/breadcrumb-1.jpg');">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="inner-content">
+                        <div class="breadcrumb-menu" data-aos="fade-down" data-aos-easing="linear"
+                            data-aos-duration="1500">
+                        </div>
+                        <div class="title" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+                            <h2>Checkout</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End breadcrumb area-->
+
+    <div class="checkout-page">
+        <div class="container">
+            <div class="inner">
+                <form id="process-order" method="POST" action="{% url 'order:process_order' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% if messages %}
+                                <div class="message-container" id="alert_message">
+                                    {% for message in messages %}
+                                        <div class="ui_kit_message_box">
+                                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                                <span>{{ message }}</span>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span class="flaticon-close"><i class="fab fa fa-times"></i></span></button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-7">
+                            <h4 class="mb-2">Shipping Address</h4>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.firstname.label}}</label>
+                                            {{shipping_form.firstname}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.lastname.label}}</label>
+                                            {{shipping_form.lastname}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.phone.label}}</label>
+                                            {{shipping_form.phone}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            {{shipping_form.email}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.country.label}}</label>
+                                            <select name="country" id="id_country" class="form-control" required>
+                                                {% for country in countries %}
+                                                    {% if country.isoCode == "NG" %}
+                                                        <option value="{{country.isoCode}}">{{country.name}}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.state.label}}</label>
+                                            <select name="state" id="id_state" class="form-control" required>
+                                                {% for state in states %}
+                                                    <option value="{{state.name}}">{{state.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.city.label}}</label>
+                                            {{shipping_form.city}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.address.label}}</label>
+                                            {{shipping_form.address}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{shipping_form.order_description.label}}</label>
+                                            {{shipping_form.order_description}}
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="order-summary border-shadow">
+                                <h5 class="mb-3">Order Summary</h5>
+                                <div class="order-list">
+                                    {% for cartitem in cart_items %}
+                                        <div class="order-item">
+                                            <div class="thumb">
+                                                <img src="{{cartitem.product.image.url}}" alt="">
+                                            </div>
+                                            <div class="more-info">
+                                                <div class="info">
+                                                    <h5>{{cartitem.product.name}}</h5>
+                                                    <div><span>{{cartitem.product.category}}</span></div>
+                                                    <div><span>X {{cartitem.quantity}}</span></div>
+                                                </div>
+                                                <div class="price">
+                                                    <h6 class="text-dark">&#8358 {{cartitem.calculate_amount}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="summary">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td><span>Total Quantity</span></td>
+                                                <td><span>{{cart_summary.quantity}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>SubTotal</span></td>
+                                                <td><span>&#8358 {{cart_summary.sub_total}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h6 class="text-dark">Total</h6></td>
+                                                <td><h6 class="text-dark">&#8358 {{cart_summary.sub_total}}</h6></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="submit-btn">
+                                <button type="submit">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="notifyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-center">
+                    <span></span>
+                </div>
+                <div class="modal-body">
+                    <p class="text16px">
+                        
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal" id="close-modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay-box border-shadow d-none">
+        <h6 class="text-black mb10">Order processing please wait..</h6>
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden"></span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script>
+        const csrftoken = "{{csrf_token}}"
+
+        // a function to display popup modal
+        function showOverlay(show=true){
+            if(show){
+                $("body").addClass("overlay")
+                $(".overlay-box").removeClass("d-none")
+            }else{
+                $("body").removeClass("overlay")
+                $(".overlay-box").addClass("d-none")
+            }
+        }
+
+        // close the pop up modal
+        $("#close-modal").on("click", function(){
+            $("#notifyModal").modal('hide');
+        })
+
+        $(".message-container .btn-close").on("click", function(){
+            $(this).closest(".message-container").hide()
+        })
+
+        function showModal(message, success=true){
+            if(success){
+                $("#notifyModal").find(".modal-header span").removeClass("error")
+                $("#notifyModal").find(".modal-header span").addClass("success")
+                $("#notifyModal").find(".modal-header span").html("<i class='fab fa fa-check'></i>")
+            }else{
+                $("#notifyModal").find(".modal-header span").removeClass("success")
+                $("#notifyModal").find(".modal-header span").addClass("error")
+                $("#notifyModal").find(".modal-header span").html("<i class='fab fa fa-times'></i>")
+            }
+            $("#notifyModal").modal('show');
+            $("#notifyModal").find(".modal-content .modal-body p").html(message)
+        }
+        
+    </script>
+{% endblock %}

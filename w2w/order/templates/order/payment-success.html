@@ -1,0 +1,55 @@
+{% extends "frontend/base.html" %}
+{% load static i18n %}
+
+{% block extra_css %}
+    <style>
+        .success-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 70px 0;
+        }
+
+        .success-content {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .success-btn {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .success-btn a{
+            color: #fff;
+        }
+
+        .success-btn:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="success-container">
+            <div class="success-content">
+                <img src="checkmark-icon.png" alt="Checkmark Icon" class="success-icon">
+                <h1>Payment Successful!</h1>
+                <p>Your payment has been processed successfully. Thank you for your purchase!</p>
+                <button class="success-btn"><a href="{% url 'product:products' %}">Continue Shopping</a></button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

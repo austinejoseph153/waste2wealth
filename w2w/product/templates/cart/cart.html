@@ -1,0 +1,196 @@
+{% extends "frontend/base.html" %}
+{% load static i18n %}
+
+{% block content %}
+    <!--Start breadcrumb area paroller-->
+    <section class="breadcrumb-area">
+        <div class="breadcrumb-area-bg" style="background-image: url('../../../static/frontend/images/breadcrumb/breadcrumb-1.jpg');">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="inner-content">
+                        <div class="breadcrumb-menu" data-aos="fade-down" data-aos-easing="linear"
+                            data-aos-duration="1500">
+                        </div>
+                        <div class="title" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+                            <h2>Shopping Cart</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End breadcrumb area-->
+
+    <div class="cart-list">
+        <div class="container">
+            <div class="inner">
+                {% if messages %}
+                    <div class="message-container" id="alert_message">
+                        {% for message in messages %}
+                            <div class="ui_kit_message_box">
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <span>{{ message }}</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span class="flaticon-close"><i class="fab fa fa-times"></i></span></button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if cart_items|length > 0 %}
+                    <div class="row">
+                        <div class="col-md-7 col-xl-9">
+                            <div class="row">
+                                {% for cartitem in cart_items %}
+                                    <div class="col-md-12 col-xl-6">
+                                        <div class="cart-item">
+                                            <div class="thumb">
+                                                <img src="{{cartitem.product.image.url}}" alt="">
+                                            </div>
+                                            <div class="more-info">
+                                                <div class="">
+                                                    <h5>{{cartitem.product.name}}</h5>
+                                                    <span>{{cartitem.product.category}}</span>
+                                                    <div class="price">
+                                                        <span>&#8358</span><span class="old-price">{{cartitem.product.price}}</span>
+                                                    </div>
+                                                    <div class="total-price">
+                                                        <span>Total Price:</span>
+                                                        <span>&#8358</span><span class="single-total-price">{{cartitem.calculate_amount}}</span>
+                                                    </div>
+                                                    <div class="quantity">
+                                                        <div class="input-group" data-cart-id="{{cartitem.pk}}">
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="quantity-left-minus btn btn-number"
+                                                                    data-type="minus" data-field="">
+                                                                    <i class="fab fa fa-minus"></i>
+                                                                </button>
+                                                            </span>
+                                                            <input type="text" id="quantity" name="quantity" class="form-control input-number"
+                                                                value="{{cartitem.quantity}}" min="1" max="100">
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="quantity-right-plus btn btn-number"
+                                                                    data-type="plus" data-field="">
+                                                                    <i class="fab fa fa-plus"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="action">
+                                                        <a href="{% url 'product:delete_cart_item' pk=cartitem.pk %}" class="btn btn-danger">Remove</a>
+                                                    </div>
+                                                </div>
+                                            </div>           
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <div class="col-sm-12">
+                                    <div class="action-btns">
+                                        <a href="{% url 'product:products' %}" class="shop-more">Shop More</a>
+                                        <a href="{% url 'product:empty_cart' cart_id=cart_id %}" class="empty-cart">Empty cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-xl-3">
+                            <div class="cart-summary border-shadow">
+                                <div>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><span>Total Qauntity:</span></td>
+                                                <td><span id="cart_total_quantity">{{total_quantity}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>SubTotal:</span></td>
+                                                <td><span>&#8358</span><span id="cart_sub_total">{{sub_total}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>Total:</span></td>
+                                                <td><span>&#8358</span><span id="cart_total">{{sub_total}}</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="submit-btn">
+                                    <a href="{% url 'product:checkout' %}">Proceed to checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- jjj -->
+                
+                {% else %}
+                    <div class="empty-container border-shadow d-flex align-items-center justify-content-center">
+                        <div class="text-center">
+                            <h4 class="mb-3">Shopping cart Empty</h4>
+                            <p>sorry you do not have any items in your shopping cart</p>
+                            <a href="{% url 'product:products' %}">Explore products</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const csrftoken = "{{csrf_token}}"
+        $(".cart-list .cart-item").each(function(){
+            var height = $(this).find(".more-info").height()
+            $(this).find(".thumb img").height(height)
+        })
+
+        $(".message-container .btn-close").on("click", function(){
+            $(this).closest(".message-container").hide()
+        })
+
+        $(".quantity-left-minus,.quantity-right-plus").on("click",function(){
+            count = parseInt($(this).closest(".input-group").find("input[name='quantity']").val())
+            cart_id = $(this).closest(".input-group").data("cart-id")
+            send = false
+            if ($(this).data("type") == "plus"){
+                count+=1
+                send = true
+            }else{
+                if(count > 1){
+                    count-=1
+                    send = true
+                }
+            }
+            if(send){
+                $.ajax({
+                    type:'POST',
+                    context:this,
+                    url:"{% url 'product:update_cart' %}",
+                    beforeSend: function(request){
+                        request.setRequestHeader("X-CSRFToken", csrftoken);
+                    },
+                    data:{
+                        cart_id:cart_id,
+                        count:count,
+                        csrfmiddlewaretoken: csrftoken},
+                    success:function(response){
+                        cart_sub_total = parseFloat(response["cart_sub_total"]).toFixed(2)
+                        cart_total_quantity = parseFloat(response["cart_total_quantity"])
+                        single_sub_total = parseFloat(response["single_sub_total"]).toFixed(2)
+                        single_total = parseFloat(response["single_total"]).toFixed(2)
+                        $(this).closest(".quantity").find("input[name='quantity']").val(response["count"])
+                        $(this).closest(".more-info").find(".old-price").html(`${single_sub_total}`)
+                        $(this).closest(".more-info").find(".single-total-price").html(`${single_total}`)
+                        $("#cart_total_quantity").html(`${cart_total_quantity}`)    
+                        $("#cart_sub_total").html(`${cart_sub_total}`)  
+                        $("#cart_total").html(`${cart_sub_total}`)  
+                          
+                    },
+                    error: function(response){
+                        console.log(response["error"])
+                    }
+                })
+            }
+            
+        })
+    </script>
+{% endblock %}

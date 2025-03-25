@@ -71,6 +71,12 @@ class LoginRegisterTemplateView(TemplateView):
                 return super(LoginRegisterTemplateView, self).render_to_response(context)
             
             if user_form.is_valid():
+                if UserRegister.objects.filter(email=user_form.cleaned_data["email"]).exists():
+                    context["user_form"] = user_form
+                    context["vendor_form"] = vendor_form
+                    context["login_form"] = LoginForm()
+                    messages.error(request, _("user with email already exists"))
+                    return redirect("account:register_login")
                 user = UserRegister(**user_form.cleaned_data)
                 if request.POST.get("user_type") == "i_am_vendor":
                     if vendor_form.is_valid():

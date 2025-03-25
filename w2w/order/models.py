@@ -27,7 +27,6 @@ class Order(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, blank=True, null=True)
     order_date = models.DateTimeField(auto_now_add=True)
     buyer = models.ForeignKey(UserRegister, on_delete=models.CASCADE)
-    seller = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     Shipping_address = models.ForeignKey(ShippingAddress, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -53,6 +52,7 @@ class OrderItem(models.Model):
     )
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Pending")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name=_("Order"), null=True)
     quantity = models.PositiveIntegerField(default=1)
     payment_status = models.CharField(default=NOT_PAID, max_length=10, choices=PAYMENT_OPTIONS)

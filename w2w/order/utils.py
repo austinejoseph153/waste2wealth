@@ -15,12 +15,10 @@ def create_order_and_payment_instance_for_cartitems(cartitems, user, shipping_ad
 
     order_total = Decimal(0.0)
     # create an order instance to be used to create order items
-    seller = Vendor.objects.get(user=user)
     try:
         order = Order(
             Shipping_address=shipping_address,
             buyer=user,
-            seller=seller
         )
         order.save()
     except:
@@ -34,6 +32,7 @@ def create_order_and_payment_instance_for_cartitems(cartitems, user, shipping_ad
                 order=order,
                 product=cartitem.product,
                 quantity=cartitem.quantity,
+                seller=cartitem.product.vendor,
                 sub_total=cartitem.calculate_total()
             )
             order_item.save()

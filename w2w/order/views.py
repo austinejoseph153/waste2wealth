@@ -55,9 +55,9 @@ def stripe_payment_checkout(request):
         messages.error(request, _(e.message))
         return redirect(source_url)
 
-    success_url = 'http://127.0.0.1:8000' + reverse(
+    success_url = 'http://127.0.0.1:5000' + reverse(
                     'order:stripe_payment_success', kwargs={'slug': payment_request.uuid}) + '?session_id={CHECKOUT_SESSION_ID}'
-    cancel_url = 'http://127.0.0.1:8000' + reverse('order:process_order')
+    cancel_url = 'http://127.0.0.1:5000' + reverse('order:process_order')
         
     metadata = {
             'mode':'payment',

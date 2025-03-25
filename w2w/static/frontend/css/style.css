@@ -3309,7 +3309,7 @@ select:focus {
     background: #ffffff;
     box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.07), inset 0px 10px 0px 0px rgba(0, 105, 64, 0.004);
     padding: 58px 70px 48px;
-    margin-top: -235px;
+    /* margin-top: -235px; */
 }
 
 .contact-form--style2::before {

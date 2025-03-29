@@ -1,0 +1,53 @@
+{% extends 'frontend/dashboard_base.html' %}
+
+{% block content %}
+<div class="crancy-table-meta mg-top-30">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="custom-form">
+                <h4>Vendor Form</h4>
+                <form action="{% url 'account:vendor_register' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.shop_name.label }}</label>
+                                {{ form.shop_name }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.shop_state.label }}</label>
+                                <select name="shop_state" id="id_state" class="form-control ignore">
+                                    {% for state in states %}
+                                        <option value="{{ state.name }}">{{ state.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mt-3">
+                                <label>{{ form.shop_city.label }}</label>
+                                {{ form.shop_city }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.shop_address.label }}</label>
+                                {{ form.shop_address }}
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="submit-btn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

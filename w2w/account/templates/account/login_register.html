@@ -100,7 +100,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>{{ vendor_form.shop_state.label }}*</label>
-                                            <select name="state" id="id_state" class="form-control">
+                                            <select name="shop_state" id="id_state" class="form-control ignore">
                                                 {% for state in states %}
                                                     <option value="{{ state.name }}">{{ state.name }}</option>
                                                 {% endfor %}

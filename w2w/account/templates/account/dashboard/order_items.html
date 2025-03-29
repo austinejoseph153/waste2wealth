@@ -1,0 +1,97 @@
+{% extends 'frontend/dashboard_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+    {% if order_items|length > 0 %}
+    <div class="crancy-table crancy-table--v3 mg-top-30" style="overflow-x: auto;">
+        <!-- crancy Table -->
+        <h3>My Orders</h3>
+        <table id="" class="crancy-table__main crancy-table__main-v3">
+            <!-- crancy Table Head -->
+            <thead class="crancy-table__head">
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        <div class="name">
+                            <span>Name</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="name">
+                            <span>Category</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div  class="price">
+                            Price
+                        </div>
+                    </th>
+                    <th>
+                        <div class="stock">
+                            Quantity
+                        </div>
+                    </th>
+                    <th>
+                        <div>Payment Status</div>
+                    </th>
+                </tr>
+            </thead>
+            <!-- crancy Table Body -->
+            <tbody class="crancy-table__body">
+                {% for order_item in order_items %}
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="{{order_item.product.image.url}}" alt="#" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="name">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ order_item.product.name }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="name">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ order_item.product.category }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price">
+                                <h4 class="crancy-table__product-title">
+                                    <span>&#8358 {{ order_item.sub_total|floatformat:0 }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="stock">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ order_item.quantity }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="status {{order_item.get_payment_status}}">
+                                <span>{{order_item.order_status}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <!-- End crancy Table Body -->
+        </table>
+        <!-- End crancy Table -->
+    </div>
+    {% else %}
+        <div class="empty-box">
+            <img src="{% static 'frontend/images/empty-icon.jpg' %}" alt="">
+            <h4 class="text-black mb15">No orders yet</h4>
+            <a href="{% url 'pages:home' %}">Go Home</a>
+        </div>
+    {% endif %}
+{% endblock %}

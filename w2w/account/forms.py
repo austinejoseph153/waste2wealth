@@ -14,9 +14,9 @@ class UserForm(forms.Form):
     
 class VendorForm(forms.Form):
     # shop informations
-    shop_name = forms.CharField(required=False, label=_('Shop Name'), widget=forms.TextInput(attrs={'class':'form-control'}))
-    shop_state = forms.CharField(required=False, label=_('Shop State'), widget=forms.TextInput(attrs={'class':'form-control'}))
-    shop_city = forms.CharField(required=False, label=_('Shop City'), widget=forms.TextInput(attrs={'class':'form-control'}))
-    shop_address = forms.CharField(required=False, label=_('Shop Address'), widget=forms.TextInput(attrs={'class':'form-control'}))
+    shop_name = forms.CharField(label=_('Shop Name'), widget=forms.TextInput(attrs={'class':'form-control'}))
+    shop_state = forms.CharField(label=_('Shop State'), widget=forms.TextInput(attrs={'class':'form-control'}))
+    shop_city = forms.CharField(label=_('Shop City'), widget=forms.TextInput(attrs={'class':'form-control'}))
+    shop_address = forms.CharField(label=_('Shop Address'), widget=forms.TextInput(attrs={'class':'form-control'}))
 
     

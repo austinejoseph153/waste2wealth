@@ -59,6 +59,18 @@ class OrderItem(models.Model):
     sub_total = models.DecimalField(max_digits=8, decimal_places=2, default=Decimal(0.0), verbose_name=_("Subtotal"),)
     delivery_date = models.DateField(verbose_name=_("Date Of Delivery"), blank=True, null=True)
 
+    def __str__(self):
+        return self.order.buyer
+    
+    def get_payment_status(self):
+        if self.payment_status == "paid":
+            status = "paid"
+        elif self.payment_status == "not paid":
+            status = "not-paid"
+        elif self.payment_status == "refunded":
+            status = "refunded"
+        return status
+
 class PaymentHistory(models.Model):
     CUR_NGN = 'NGN'
     CURRENCY_CHOICES = (

@@ -1,0 +1,103 @@
+{% extends 'frontend/dashboard_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+    {% if user_products|length > 0 %}
+    <div class="crancy-table crancy-table--v3 mg-top-30" style="overflow-x: auto;">
+        <!-- crancy Table -->
+        <h3>My Product List</h3>
+        <table id="" class="crancy-table__main crancy-table__main-v3">
+            <!-- crancy Table Head -->
+            <thead class="crancy-table__head">
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        <div class="name">
+                            <span>Name</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="name">
+                            <span>Category</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div  class="price">
+                            Price
+                        </div>
+                    </th>
+                    <th>
+                        <div class="stock">
+                            Stock
+                        </div>
+                    </th>
+                    <th>
+                        <div class="weight">weight</div>
+                    </th>
+                </tr>
+            </thead>
+            <!-- crancy Table Body -->
+            <tbody class="crancy-table__body">
+                {% for product in user_products %}
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="{{product.image.url}}" alt="#" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="name">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ product.name }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="name">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ product.category }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price">
+                                <h4 class="crancy-table__product-title">
+                                    <span>&#8358 {{ product.price|floatformat:0 }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="stock">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ product.stock }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="weight">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{product.weight}} kg</span>
+                                </h4>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <!-- End crancy Table Body -->
+        </table>
+        <!-- End crancy Table -->
+    </div>
+    {% else %}
+        <div class="empty-box">
+            <img src="{% static 'frontend/images/empty-icon.jpg' %}" alt="">
+            <h4 class="text-black mb15">No products here</h4>
+            <a href="{% url 'pages:home' %}">Go Home</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    
+{% endblock %}

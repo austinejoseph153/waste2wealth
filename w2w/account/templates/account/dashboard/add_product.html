@@ -1,0 +1,72 @@
+{% extends 'frontend/dashboard_base.html' %}
+
+{% block content %}
+<div class="crancy-table-meta mg-top-30">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="custom-form">
+                <h4>Add New Product</h4>
+                <form action="{% url 'account:user_add_product' %}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="vendor_id" value="{{vendor.pk}}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.name.label }}</label>
+                                {{ form.name }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.price.label }}</label>
+                                {{ form.price }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.stock.label }}</label>
+                                {{ form.stock }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.weight.label }}</label>
+                                {{ form.weight }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.description.label }}</label>
+                                {{ form.description }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ form.category.label }}</label>
+                                {{ form.category }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mt-3">
+                                <label>Image</label>
+                                {{ form.image }}
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="submit-btn">Add Product</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(".notification-close").on("click", function(){
+            $(this).closest(".notification").slideUp(300)
+        })
+    </script>
+{% endblock %}

@@ -14,6 +14,9 @@ from django.utils.translation import gettext_lazy as _
 from .utils import get_state_by_country_code_from_file
 from .models import UserRegister, Vendor
 from .auth import user_authenticate, user_login, user_logout, user_is_authenticated
+from w2w.product.models import Product
+from w2w.order.models import OrderItem
+from w2w.product.forms import ProductForm
 
 class LoginRegisterTemplateView(TemplateView):
     template_name = "account/login_register.html"
@@ -40,8 +43,7 @@ class LoginRegisterTemplateView(TemplateView):
                 if user:
                     if user.is_active:
                         user_login(request, user)
-                        messages.success(request, _("Login successful"))
-                        return redirect("account:register_login")
+                        return redirect("account:user_dashboard")
                     else:
                         context["login_form"] = login_form
                         context["user_form"] = UserForm()
@@ -81,7 +83,7 @@ class LoginRegisterTemplateView(TemplateView):
                 if request.POST.get("user_type") == "i_am_vendor":
                     if vendor_form.is_valid():
                         user.save()
-                        vendor = Vendor(user=user, **vendor_form.cleaned_data)
+                        vendor = Vendor(**vendor_form.cleaned_data)
                         vendor.user = user
                         vendor.save()
                         messages.success(request, _("Account created succesfully. login to your account"))
@@ -103,3 +105,126 @@ class LoginRegisterTemplateView(TemplateView):
                 context["login_form"] = LoginForm()
                 messages.error(request, _("invalid form data"))
                 return super(LoginRegisterTemplateView, self).render_to_response(context)    
+
+def logout(request):
+    user_logout(request)
+    messages.success(request, _('Logout was successful'))
+    return redirect('account:register_login')
+
+def user_dashboard(request):
+    user = user_is_authenticated(request)
+    if user:
+        context = {}
+        context["user"] = user
+        if Vendor.objects.filter(user=user).exists():
+            vendor = Vendor.objects.get(user=user)
+            context["vendor"] = vendor
+        return render(request,"account/dashboard/index.html", context=context)
+    else:
+        return redirect("account:login_register")
+    
+
+def user_products(request):
+    user = user_is_authenticated(request)
+    if user:
+        context = {}
+        if Vendor.objects.filter(user=user).exists():
+            vendor = Vendor.objects.get(user=user)
+            user_products = Product.objects.filter(vendor=vendor).order_by("-id")
+            context["user_products"] = user_products
+            context["vendor"] = vendor
+        context["user"] = user
+        return render(request, "account/dashboard/user_products.html", context=context)
+    else:
+        return redirect("account:login_register")
+
+def user_add_product(request):
+    user = user_is_authenticated(request)
+    if user:
+        context = {}
+        context["user"] = user
+        
+        # check if user is a vendor
+        if Vendor.objects.filter(user=user).exists():
+            vendor = Vendor.objects.get(user=user)
+            context["vendor"] = vendor
+        
+        if request.method == "POST":
+            form = ProductForm(request.POST or None, request.FILES or None)
+            if form.is_valid():
+                if Product.objects.filter(name=form.cleaned_data.get("name")).exists():
+                    messages.error(request, "product with name already exist!")
+                    context["form"] = form
+                    return render(request, "account/dashboard/add_product.html", context=context)
+                product = Product(**form.cleaned_data)
+                product.image = request.FILES.get("image")
+                product.vendor = vendor
+                product.save()
+                messages.success(request,"Product added successfully")
+                return redirect("account:user_products")
+            else:        
+                context["form"] = form
+                messages.error(request, "an error with the form you submitted")
+                return render(request, "account/dashboard/add_product.html", context=context)
+        else: 
+            context["form"] = ProductForm()
+            return render(request, "account/dashboard/add_product.html", context=context)
+    else:
+        return redirect("account:login_register")
+
+
+def user_orders(request):
+    user = user_is_authenticated(request)
+    if user:
+        context = {}
+        context["user"] = user
+        order_items = OrderItem.objects.filter(order__buyer=user)
+        # check if user is a vendor
+        if Vendor.objects.filter(user=user).exists():
+            vendor = Vendor.objects.get(user=user)
+            context["vendor"] = vendor
+        context["order_items"] = order_items
+        return render(request, "account/dashboard/order_items.html", context=context)
+    else:
+        return redirect("account:login_register")
+
+def register_vendor(request):
+    user = user_is_authenticated(request)
+    if user:
+        context = {}
+        context["user"] = user
+        context["states"] = get_state_by_country_code_from_file("NG")
+        # check if user is a vendor
+        if Vendor.objects.filter(user=user).exists():
+            vendor = Vendor.objects.get(user=user)
+            context["vendor"] = vendor
+        if request.method == "POST":
+            form = VendorForm(request.POST or None)
+            if form.is_valid():
+                if Vendor.objects.filter(shop_name=form.cleaned_data.get("shop_name")).exists():
+                    messages.error(request, "Shop name already exist!")
+                    context["form"] = form
+                    return render(request, "account/dashboard/vendor_register.html", context=context)
+                else:
+                    vendor = Vendor(**form.cleaned_data)
+                    vendor.save()
+                    messages.success(request, "Registration successful")
+                    return redirect("account:user_dashboard")
+            else:
+                context["form"] = form
+                messages.error("invalid form data")
+                return render(request, "account/dashboard/vendor_register.html", context=context)
+        else:
+            context["form"] = VendorForm()
+            return render(request, "account/dashboard/vendor_register.html", context=context)
+    else:
+        return redirect("account:login_register")
+
+# def user_products(request):
+#     user = user_is_authenticated(request)
+#     if user:
+#         context = {}
+#         context["user"] = user
+#         return render(request, "account/dashboard/user_product.html")
+#     else:
+#         return redirect("account:login_register")

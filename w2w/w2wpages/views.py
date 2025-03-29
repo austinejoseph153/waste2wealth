@@ -93,7 +93,7 @@ class ContactTemplateView(TemplateView):
 # def load_waste_categories():
 #     responses = []
 #     count = 0
-#     with open(base_dir+"/w2wpages/fixtures/waste-categories.json", "r") as file:
+#     with open(base_dir+"waste-categories.json", "r") as file:
 #         responses = json.loads(file.read())
 #     for category in responses:
 #         image_path = category["image_url"]

@@ -903,7 +903,7 @@ if ($('#search-popup').length) {
 
 
 
-// $('select:not(.ignore)').niceSelect();
+$('select:not(.ignore)').niceSelect();
 
 
 

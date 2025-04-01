@@ -54,10 +54,14 @@ def stripe_payment_checkout(request):
     except ValidationError as e:
         messages.error(request, _(e.message))
         return redirect(source_url)
-
-    success_url = 'http://127.0.0.1:5000' + reverse(
+    
+    # delete items in cart
+    for item in cart_items:
+        item.delete()
+    
+    success_url = 'http://127.0.0.1:8000' + reverse(
                     'order:stripe_payment_success', kwargs={'slug': payment_request.uuid}) + '?session_id={CHECKOUT_SESSION_ID}'
-    cancel_url = 'http://127.0.0.1:5000' + reverse('order:process_order')
+    cancel_url = 'http://127.0.0.1:8000' + reverse('order:process_order')
         
     metadata = {
             'mode':'payment',
@@ -84,7 +88,6 @@ def stripe_payment_checkout(request):
 def stripe_payment_success(request, slug):
     slug_field = 'uuid'
     payment_details = get_object_or_404(PaymentHistory, uuid=slug)
-    print(payment_details.order.buyer)
     o_id = OrderItem.objects.all()
     context = {}
     if request.GET.get('session_id'):
@@ -92,11 +95,9 @@ def stripe_payment_success(request, slug):
             context['paymentrequest'] = payment_details
             paymentrequestitem = PaymentItem.objects.filter(payment_history=payment_details)
             for item in paymentrequestitem:
-                pass
-                # print(item.item_ordered.order.shipping_info.location)
-                # item.item_ordered.payment_status = 
-                # item.item_ordered.payment_method= OrderItem.PM_STRIPE
-                # item.item_ordered.save()
+                item.item.payment_status = item.item.PAID
+                item.item.save()
+
             # change payment history to verified  
             payment_details.status = PaymentHistory.PAYMENT_VERIFIED
             payment_details.save()
@@ -108,5 +109,3 @@ def stripe_payment_success(request, slug):
             return render(request, "order/payment-success.html", context)
     else:
         raise SuspiciousOperation(_("Bad request. Session required!"))
-
-

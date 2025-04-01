@@ -8,10 +8,6 @@ class UserRegister(models.Model):
     phone = models.CharField(max_length=15, verbose_name=_("Phone"))
     password = models.CharField(max_length=20, verbose_name=_("Password"))
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
-
-    def __str__(self):
-        return "%s-%s" %(self.lastname, self.firstname)
-    
     
     def __str__(self):
         return "%s - %s" %(self.lastname, self.firstname)

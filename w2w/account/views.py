@@ -30,6 +30,7 @@ class LoginRegisterTemplateView(TemplateView):
         context["login_form"] = LoginForm()
         context["user_form"] = UserForm()
         context["vendor_form"] = VendorForm()
+        context["user"] = user_is_authenticated(self.request)
         context["states"] = get_state_by_country_code_from_file("NG")
         return context
     
@@ -111,6 +112,22 @@ def logout(request):
     messages.success(request, _('Logout was successful'))
     return redirect('account:register_login')
 
+def delete_user_products(request, pk):
+    user = user_is_authenticated(request)
+    if user:
+        product = Product.objects.get(pk=pk)
+        vendor = Vendor.objects.get(user=user)
+        
+        if product.vendor != vendor:
+            messages.error(request,"you do not have permission to delete this product")
+            return redirect("account:user_products")
+        
+        product.delete()
+        messages.success(request, "item deleted successfully")
+        return redirect("account:user_products")
+    else:
+        pass 
+
 def user_dashboard(request):
     user = user_is_authenticated(request)
     if user:
@@ -121,7 +138,7 @@ def user_dashboard(request):
             context["vendor"] = vendor
         return render(request,"account/dashboard/index.html", context=context)
     else:
-        return redirect("account:login_register")
+        return redirect("account:register_login")
     
 
 def user_products(request):
@@ -136,7 +153,7 @@ def user_products(request):
         context["user"] = user
         return render(request, "account/dashboard/user_products.html", context=context)
     else:
-        return redirect("account:login_register")
+        return redirect("account:register_login")
 
 def user_add_product(request):
     user = user_is_authenticated(request)
@@ -170,7 +187,7 @@ def user_add_product(request):
             context["form"] = ProductForm()
             return render(request, "account/dashboard/add_product.html", context=context)
     else:
-        return redirect("account:login_register")
+        return redirect("account:register_login")
 
 
 def user_orders(request):
@@ -186,7 +203,7 @@ def user_orders(request):
         context["order_items"] = order_items
         return render(request, "account/dashboard/order_items.html", context=context)
     else:
-        return redirect("account:login_register")
+        return redirect("account:register_login")
 
 def register_vendor(request):
     user = user_is_authenticated(request)
@@ -218,7 +235,7 @@ def register_vendor(request):
             context["form"] = VendorForm()
             return render(request, "account/dashboard/vendor_register.html", context=context)
     else:
-        return redirect("account:login_register")
+        return redirect("account:register_login")
 
 # def user_products(request):
 #     user = user_is_authenticated(request)

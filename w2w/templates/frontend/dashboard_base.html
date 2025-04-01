@@ -38,7 +38,7 @@
             <div class="admin-menu">
                 <!-- Logo -->
                 <div class="logo crancy-sidebar-padding pd-right-0">
-                    <a class="crancy-logo" href="">
+                    <a class="crancy-logo" href="{% url 'pages:home' %}">
                     <!-- Logo for Default -->
                     <img class="crancy-logo__main" src="{% static 'dashboard/img/logo.png' %}" alt="#" />
                     <img
@@ -159,7 +159,7 @@
                                 >
                             </li>
                             {% endif %}
-                            {% if vendor %}
+                            {% if not vendor %}
                                 <li>
                                     <a class="collapsed" href="{% url 'account:vendor_register' %}"
                                     ><span class="menu-bar__text">

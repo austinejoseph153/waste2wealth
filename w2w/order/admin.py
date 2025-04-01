@@ -26,4 +26,4 @@ class OrderModelAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'sub_total', 'order_status']
+    list_display = ['id', 'sub_total', 'payment_status']

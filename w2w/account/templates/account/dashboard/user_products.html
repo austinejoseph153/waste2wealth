@@ -36,6 +36,11 @@
                     <th>
                         <div class="weight">weight</div>
                     </th>
+                    <th>
+                        <div class="action">
+                            Action
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <!-- crancy Table Body -->
@@ -78,8 +83,13 @@
                         <td>
                             <div class="weight">
                                 <h4 class="crancy-table__product-title">
-                                    <span>{{product.weight}} kg</span>
+                                    <span>{{ product.weight|floatformat:0 }} kg</span>
                                 </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action">
+                                <a href="{% url 'account:delete_user_product' pk=product.pk %}">Delete</a>
                             </div>
                         </td>
                     </tr>

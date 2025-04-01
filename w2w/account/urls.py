@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (LoginRegisterTemplateView, user_dashboard, 
                     logout, user_products, user_orders, 
-                    user_add_product, register_vendor)
+                    user_add_product, register_vendor, delete_user_products)
 app_name = "account"
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path("user/orders/", view=user_orders, name="user_orders"),
     path("user/add/product/", view=user_add_product, name="user_add_product"),
     path("vendor/register/", view=register_vendor, name="vendor_register"),
+    path("delete/user/product/<int:pk>/", view=delete_user_products, name="delete_user_product"),
     path("logout/", view=logout, name="logout"),
 ]

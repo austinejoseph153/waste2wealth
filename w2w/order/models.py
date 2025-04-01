@@ -60,7 +60,7 @@ class OrderItem(models.Model):
     delivery_date = models.DateField(verbose_name=_("Date Of Delivery"), blank=True, null=True)
 
     def __str__(self):
-        return self.order.buyer
+        return "%s-%s" %(self.order.buyer.lastname, self.order.buyer.firstname)
     
     def get_payment_status(self):
         if self.payment_status == "paid":

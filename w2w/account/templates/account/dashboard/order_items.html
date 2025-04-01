@@ -25,7 +25,7 @@
                     </th>
                     <th>
                         <div  class="price">
-                            Price
+                            SubTotal
                         </div>
                     </th>
                     <th>
@@ -77,7 +77,7 @@
                         </td>
                         <td>
                             <div class="status {{order_item.get_payment_status}}">
-                                <span>{{order_item.order_status}}</span>
+                                <span>{{ order_item.payment_status }}</span>
                             </div>
                         </td>
                     </tr>

@@ -78,7 +78,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>{{shipping_form.country.label}}</label>
-                                            <select name="country" id="id_country" class="form-control" required>
+                                            <select name="country" id="id_country" class="form-control ignore" required>
                                                 {% for country in countries %}
                                                     {% if country.isoCode == "NG" %}
                                                         <option value="{{country.isoCode}}">{{country.name}}</option>
@@ -90,7 +90,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>{{shipping_form.state.label}}</label>
-                                            <select name="state" id="id_state" class="form-control" required>
+                                            <select name="state" id="id_state" class="form-control ignore" required>
                                                 {% for state in states %}
                                                     <option value="{{state.name}}">{{state.name}}</option>
                                                 {% endfor %}

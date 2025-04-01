@@ -16,6 +16,7 @@ from django.views.generic.edit import FormMixin
 from django.utils.translation import gettext_lazy as _
 from w2w.product.models import WasteCategory, Product
 from w2w.account.models import Vendor
+from w2w.account.auth import user_is_authenticated
 
 base_dir = Path(__file__).parent.parent
 base_dir = os.path.join(base_dir, "w2wpages/fixtures/")
@@ -31,6 +32,7 @@ class HomeTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeTemplateView, self).get_context_data(**kwargs)
         context["waste_categories"] = WasteCategory.objects.all()
+        context["user"] = user_is_authenticated(self.request)
         return context
 
 class ContactTemplateView(TemplateView):
@@ -42,6 +44,7 @@ class ContactTemplateView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(ContactTemplateView, self).get_context_data(**kwargs)
+        context["user"] = user_is_authenticated(self.request)
         return context
 
 

@@ -22,6 +22,7 @@ class ProductListTemplateView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductListTemplateView, self).get_context_data(**kwargs)
+        context["user"] = user_is_authenticated(self.request)
         return context
 
 def cart_page_view(request):
@@ -41,6 +42,7 @@ def cart_page_view(request):
                 context["sub_total"] = total_cost["sub_total"]
                 context["total_quantity"] = sum([x.quantity for x in cart_items])
             context["cart_items"] = cart_items
+            context["user"] = user
             return render(request, "cart/cart.html", context)
         else:
             return redirect("account:register_login")
@@ -125,6 +127,7 @@ def checkout(request):
         context["countries"] = get_countries_from_file()
         context["states"] = get_state_by_country_code_from_file("NG")
         context["cart_items"] = cartitems
+        context["user"] = user
         return render(request,"cart/checkout.html",context=context)
     else:
         pass

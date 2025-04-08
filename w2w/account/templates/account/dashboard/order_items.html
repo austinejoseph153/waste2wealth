@@ -24,6 +24,11 @@
                         </div>
                     </th>
                     <th>
+                        <div class="date">
+                            <span>Order Date</span>
+                        </div>
+                    </th>
+                    <th>
                         <div  class="price">
                             SubTotal
                         </div>
@@ -58,6 +63,13 @@
                             <div class="name">
                                 <h4 class="crancy-table__product-title">
                                     <span>{{ order_item.product.category }}</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="date">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ order_item.order.order_date }}</span>
                                 </h4>
                             </div>
                         </td>

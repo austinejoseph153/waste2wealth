@@ -20,13 +20,21 @@ class Product(models.Model):
     description = models.TextField(verbose_name=_("Product Description"))
     category = models.ForeignKey(WasteCategory, on_delete=models.CASCADE, verbose_name=_("Product Category"))
     image = models.ImageField(upload_to="product/images", verbose_name=_("Product Image"))
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Product Price"))
-    stock = models.IntegerField(verbose_name=_("Product Stock"))
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Cost Per unit weight"))
+    available = models.IntegerField(blank=True, null=True, verbose_name=_("Available Product"))
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, verbose_name=_("Product Vendor"))
-    weight = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Product Weight"))
+    weight = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Total Product Weight"))
 
+    def sold_out(self):
+        return int(self.weight - self.available) 
+    
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.available:
+            self.available = self.weight
+        super().save(*args, **kwargs)
 
 class Cart(models.Model):
     user = models.ForeignKey(UserRegister, on_delete=models.CASCADE, verbose_name=_("Cart User"))

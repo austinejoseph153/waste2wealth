@@ -12506,6 +12506,9 @@ div.ck.ck-editor__main .ck-content p {
 .crancy-table__main .crancy-table__body td div.name{
   width: 100px;
 }
+.crancy-table__main .crancy-table__body td div.date{
+  width: 190px;
+}
 .crancy-table__main .crancy-table__body td div.weight,
 .crancy-table__main .crancy-table__body td div.price{
   width: 90px;

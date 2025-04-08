@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.conf import settings
 import requests
+import datetime
 from w2w.account.auth import user_is_authenticated
 from w2w.order.models import ShippingAddress
 from w2w.product.forms import ShippingAddressForm
@@ -95,11 +96,15 @@ def stripe_payment_success(request, slug):
             context['paymentrequest'] = payment_details
             paymentrequestitem = PaymentItem.objects.filter(payment_history=payment_details)
             for item in paymentrequestitem:
+                print(item)
                 item.item.payment_status = item.item.PAID
+                item.item.product.available -= item.item.quantity
+                item.item.product.save()
                 item.item.save()
 
             # change payment history to verified  
             payment_details.status = PaymentHistory.PAYMENT_VERIFIED
+            payment_details.payment_date = datetime.datetime.now()
             payment_details.save()
             return render(request, "order/payment-success.html" ,context)
         except:

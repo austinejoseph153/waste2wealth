@@ -97,18 +97,23 @@ def update_cart(request):
             cart_item = CartItem.objects.get(pk=cart_id)
         except CartItem.DoesNotExist:
             return JsonResponse({"message":"cart item not found"}, status=404)
-        else:
-            cart_item.quantity = count
-            cart_item.save()
-            cart_items = CartItem.objects.filter(cart=cart_item.cart, completed=False)
-            total_cost = get_cartitem_total_cost(cart_items)
-            return JsonResponse({"message":"update successful",
-                                "count":cart_item.quantity,
-                                "single_subtotal":cart_item.calculate_amount(),
-                                "single_total":cart_item.calculate_total(),
-                                "cart_total_quantity":total_cost["quantity"],
-                                "cart_sub_total":total_cost["sub_total"],
-                             }, status=200)
+        
+        # check if the quantity required is more than the available quantity
+        if not cart_item.quantity < cart_item.product.available:
+            return JsonResponse({"message":"limit exceeded"})
+        
+        cart_item.quantity = count
+        cart_item.save()
+        cart_items = CartItem.objects.filter(cart=cart_item.cart, completed=False)
+        total_cost = get_cartitem_total_cost(cart_items)
+        cart_item.calculate_amount
+        return JsonResponse({"message":"update successful",
+                            "count":cart_item.quantity,
+                            "single_subtotal":cart_item.calculate_amount(),
+                            "single_total":cart_item.calculate_total(),
+                            "cart_total_quantity":total_cost["quantity"],
+                            "cart_sub_total":total_cost["sub_total"],
+                            }, status=200)
     else:
         return JsonResponse({"message":"an error occured"}, status=405)
     
@@ -143,3 +148,5 @@ def get_states(request):
     states = get_state_by_country_code_from_file(country_code)
     return JsonResponse({"states":states})
 
+# for x in Product.objects.all():
+#     print(x.weight, x.available)

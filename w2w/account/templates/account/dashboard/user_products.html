@@ -29,12 +29,17 @@
                         </div>
                     </th>
                     <th>
+                        <div class="weight">Total weight</div>
+                    </th>
+                    <th>
                         <div class="stock">
-                            Stock
+                            Sold out
                         </div>
                     </th>
                     <th>
-                        <div class="weight">weight</div>
+                        <div class="stock">
+                            Available
+                        </div>
                     </th>
                     <th>
                         <div class="action">
@@ -74,16 +79,23 @@
                             </div>
                         </td>
                         <td>
-                            <div class="stock">
+                            <div class="weight">
                                 <h4 class="crancy-table__product-title">
-                                    <span>{{ product.stock }}</span>
+                                    <span>{{ product.weight|floatformat:0 }} kg</span>
                                 </h4>
                             </div>
                         </td>
                         <td>
-                            <div class="weight">
+                            <div class="stock">
                                 <h4 class="crancy-table__product-title">
-                                    <span>{{ product.weight|floatformat:0 }} kg</span>
+                                    <span>{{ product.sold_out }}kg</span>
+                                </h4>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="stock">
+                                <h4 class="crancy-table__product-title">
+                                    <span>{{ product.available }}kg</span>
                                 </h4>
                             </div>
                         </td>

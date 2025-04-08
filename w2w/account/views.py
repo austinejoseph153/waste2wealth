@@ -195,7 +195,7 @@ def user_orders(request):
     if user:
         context = {}
         context["user"] = user
-        order_items = OrderItem.objects.filter(order__buyer=user)
+        order_items = OrderItem.objects.filter(order__buyer=user).order_by("-id")
         # check if user is a vendor
         if Vendor.objects.filter(user=user).exists():
             vendor = Vendor.objects.get(user=user)

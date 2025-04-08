@@ -130,10 +130,10 @@
                                                 <div class="info">
                                                     <h5>{{cartitem.product.name}}</h5>
                                                     <div><span>{{cartitem.product.category}}</span></div>
-                                                    <div><span>X {{cartitem.quantity}}</span></div>
+                                                    <div><span>X {{cartitem.quantity}}kg</span></div>
                                                 </div>
                                                 <div class="price">
-                                                    <h6 class="text-dark">&#8358 {{cartitem.calculate_amount}}</h6>
+                                                    <h6 class="price-color">&#8358 {{cartitem.calculate_amount}}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,16 +143,16 @@
                                     <div>
                                         <table>
                                             <tr>
-                                                <td><span>Total Quantity</span></td>
-                                                <td><span>{{cart_summary.quantity}}</span></td>
+                                                <td><span>Total Weight</span></td>
+                                                <td><span>{{cart_summary.quantity}} kg</span></td>
                                             </tr>
                                             <tr>
                                                 <td><span>SubTotal</span></td>
-                                                <td><span>&#8358 {{cart_summary.sub_total}}</span></td>
+                                                <td><span class="price-color">&#8358 {{cart_summary.sub_total}}</span></td>
                                             </tr>
                                             <tr>
                                                 <td><h6 class="text-dark">Total</h6></td>
-                                                <td><h6 class="text-dark">&#8358 {{cart_summary.sub_total}}</h6></td>
+                                                <td><h6 class="price-color">&#8358 {{cart_summary.sub_total}}</h6></td>
                                             </tr>
                                         </table>
                                     </div>

@@ -19,5 +19,4 @@ class ProductForm(forms.Form):
     category = forms.ModelChoiceField(empty_label="Category", queryset=WasteCategory.objects.all(), widget=forms.Select(attrs={"class":"form-select"}))
     image = forms.ImageField()
     price = forms.DecimalField(label="Price", widget=forms.NumberInput(attrs={"class":"form-control"}))
-    stock = forms.IntegerField(label="Quantity", widget=forms.NumberInput(attrs={"class":"form-control"}))
     weight = forms.DecimalField(label="Weight", widget=forms.NumberInput(attrs={"class":"form-control"}))

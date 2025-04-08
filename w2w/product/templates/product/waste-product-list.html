@@ -31,6 +31,15 @@
                         <div class="col-sm-6 col-md-4 col-xl-3">
                             <div class="single-product">
                                 <div class="thumb">
+                                    {% if product.available == 0 %}
+                                        <div class="available">
+                                            <span class="sold-out">Sold out</span>
+                                        </div>
+                                    {% else %}
+                                        <div class="available">
+                                            <span>available</span>
+                                        </div>
+                                    {% endif %}
                                     <img src="{{ product.image.url }}" alt="">
                                 </div>
                                 <div class="price-tag">
@@ -41,9 +50,11 @@
                                     <h6>{{product.name}}</h6>
                                     <p class="m-0">{{product.category}}</p>
                                 </div>
-                                <div class="links">
-                                    <a href="{% url 'product:add_to_cart' product_id=product.id %}">add to cart</a>
-                                </div>
+                                {% if product.available > 0 %}
+                                    <div class="links">
+                                        <a href="{% url 'product:add_to_cart' product_id=product.id %}">add to cart</a>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

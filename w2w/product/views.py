@@ -59,7 +59,6 @@ def add_to_cart(request, product_id):
                 cart = Cart.objects.get(user=user)
             except:
                 cart = Cart.objects.create(user=user)
-
             try:
                 cart_item = CartItem.objects.get(cart=cart, product=product)
                 cart_item.quantity += quantity

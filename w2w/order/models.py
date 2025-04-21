@@ -38,9 +38,9 @@ class OrderItem(models.Model):
     ORDER_STATUS = (
         ("pending","Pending"),
         ("processing","Processing"),
-        ("Shipped","Shipped"),
-        ("Delivered","Delivered"),
-        ("Cancelled","Cancelled"),
+        ("shipped","Shipped"),
+        ("delivered","Delivered"),
+        ("cancelled","Cancelled"),
     )
     PAID = "paid"
     NOT_PAID = "not paid"
@@ -50,7 +50,7 @@ class OrderItem(models.Model):
         (NOT_PAID,"Not Paid"),
         (REFUNDED,"Refunded"),
     )
-    order_status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Pending")
+    order_status = models.CharField(max_length=20, choices=ORDER_STATUS, default="pending")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     seller = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name=_("Order"), null=True)

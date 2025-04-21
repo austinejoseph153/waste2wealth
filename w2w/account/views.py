@@ -3,9 +3,12 @@ from django.views.generic.base import TemplateView
 from django.views.generic import FormView
 import datetime
 import uuid
+from django.db.models.functions import TruncMonth
 from pathlib import Path
 import os
+from django.db.models import Sum, Count
 import json
+from django.http import HttpResponseNotAllowed, JsonResponse
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .forms import LoginForm, UserForm, VendorForm
@@ -15,7 +18,7 @@ from .utils import get_state_by_country_code_from_file
 from .models import UserRegister, Vendor
 from .auth import user_authenticate, user_login, user_logout, user_is_authenticated
 from w2w.product.models import Product
-from w2w.order.models import OrderItem
+from w2w.order.models import OrderItem, PaymentItem, PaymentHistory
 from w2w.product.forms import ProductForm
 
 class LoginRegisterTemplateView(TemplateView):
@@ -136,7 +139,64 @@ def user_dashboard(request):
         if Vendor.objects.filter(user=user).exists():
             vendor = Vendor.objects.get(user=user)
             context["vendor"] = vendor
+        orders = OrderItem.objects.filter(order__buyer=user)
+        total_orders = orders.count()
+        total_revenue = orders.aggregate(Sum('sub_total'))['sub_total__sum']
+        pending_orders = orders.filter(order_status='pending').count()
+        processing_orders = orders.filter(order_status='processing').count()
+        shipped_orders = orders.filter(order_status='shipped').count()
+        delivered_orders = orders.filter(order_status='delivered').count()
+        cancelled_orders = orders.filter(order_status='cancelled').count()
+
+        payments = PaymentItem.objects.filter(payment_history__order__buyer=user)
+        pending_payments = orders.filter(payment_status=OrderItem.PAID).count()
+        paid_payments = orders.filter(payment_status=OrderItem.NOT_PAID).count()
+        refunded_payments = orders.filter(payment_status=OrderItem.REFUNDED).count()
+        
+        total_payments = payments.aggregate(Sum('amount'))['amount__sum']
+        
+
+        context["total_orders"] = total_orders
+        context["total_revenue"] = total_revenue
+        context["pending_orders"] = pending_orders
+        context["shipped_orders"] = shipped_orders
+        context["delivered_orders"] = delivered_orders
+        context["processing_orders"] = processing_orders
+        context["cancelled_orders"] = cancelled_orders
+        context["total_payments"] = total_payments
+        context["pending_payments"] = pending_payments
+        context["paid_payments"] = paid_payments
+        context["refunded_payments"] = refunded_payments
         return render(request,"account/dashboard/index.html", context=context)
+    else:
+        return redirect("account:register_login")
+
+def get_user_order_revenue(request):
+    user = user_is_authenticated(request)
+    if user:
+        orders_by_month = OrderItem.objects.filter(order__buyer=user).annotate(
+            month=TruncMonth('order__order_date')
+            ).values('month').annotate(subtotal=Sum('sub_total')).order_by('month')
+
+        order_data = []
+        for order in orders_by_month:
+            month_name = order['month'].strftime('%b')
+            data = {
+                'month': str(month_name),
+                'revenue': int(order['subtotal'])
+            }
+            order_data.append(data)
+        return JsonResponse({"order_data":order_data})
+
+def user_profile(request):
+    user = user_is_authenticated(request)
+    if user:
+        context = {}
+        context["user"] = user
+        if Vendor.objects.filter(user=user).exists():
+            vendor = Vendor.objects.get(user=user)
+            context["vendor"] = vendor
+        return render(request,"account/dashboard/user_profile.html", context=context)
     else:
         return redirect("account:register_login")
     
